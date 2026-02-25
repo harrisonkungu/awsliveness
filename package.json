@@ -1,5 +1,5 @@
 {
-  "name": "awsliveness",
+  "name": "@harrison-coder/awsliveness",
   "version": "0.0.1",
   "description": "Perform Liveness check and return results",
   "main": "dist/plugin.cjs.js",

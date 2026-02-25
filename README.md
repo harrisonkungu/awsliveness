@@ -2,35 +2,53 @@
 
 Perform Liveness check and return results
 
-## Install
+
+# @harrison-coder/awsliveness
+
+AWS Face Liveness Detection plugin for Capacitor Apps
+
+## Installation
 
 ```bash
-npm install awsliveness
+npm install @harrison-coder/awsliveness
 npx cap sync
-```
+
+
 
 ## API
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
+* [`startLivenessCheck(...)`](#startlivenesscheck)
+* [`checkAvailability()`](#checkavailability)
 
 </docgen-index>
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### echo(...)
+### startLivenessCheck(...)
 
 ```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+startLivenessCheck(options: { sessionId: string; region?: string; }) => Promise<{ success: boolean; status?: string; error?: string; referenceImage?: string; }>
 ```
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
+| Param         | Type                                                 |
+| ------------- | ---------------------------------------------------- |
+| **`options`** | <code>{ sessionId: string; region?: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>Promise&lt;{ success: boolean; status?: string; error?: string; referenceImage?: string; }&gt;</code>
+
+--------------------
+
+
+### checkAvailability()
+
+```typescript
+checkAvailability() => Promise<{ available: boolean; }>
+```
+
+**Returns:** <code>Promise&lt;{ available: boolean; }&gt;</code>
 
 --------------------
 
