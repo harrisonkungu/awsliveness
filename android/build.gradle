@@ -95,7 +95,7 @@ dependencies {
   implementation 'com.amplifyframework:aws-auth-cognito:2.33.0'
   implementation 'com.amplifyframework:core:2.33.0'
 
-  // Material Design
+  // Material Des
   implementation 'com.google.android.material:material:1.13.0'
 
   testImplementation "junit:junit:$junitVersion"
