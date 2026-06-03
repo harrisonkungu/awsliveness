@@ -18,7 +18,7 @@ class FaceLivenessActivity : ComponentActivity() {
     const val EXTRA_SESSION_ID = "sessionId"
     const val EXTRA_REGION = "region"
     const val RESULT_ERROR = "error"
-    const val RESULT_REFERENCE_IMAGE = "referenceImage" // Add this
+    const val RESULT_REFERENCE_IMAGE = "referenceImage"
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
