@@ -1,11 +1,16 @@
-package com.awsliveness // Ensure same package as Java plugin
+package com.awsliveness
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import com.amplifyframework.ui.liveness.ui.FaceLivenessDetector
 import com.amplifyframework.ui.liveness.ui.LivenessColorScheme
 
@@ -36,19 +41,27 @@ class FaceLivenessActivity : ComponentActivity() {
       MaterialTheme(
         colorScheme = LivenessColorScheme.default()
       ) {
-
-
-        FaceLivenessDetector(
-          sessionId = sessionId,
-          region = region,
-          onComplete = {
-            finishWithSuccess("success image")
-          },
-          onError = { error ->
-            Log.e(TAG, "Error during Face Liveness flow ${error.message}")
-            finishWithError(error.message ?: "Unknown error occurred")
+        Scaffold(
+          modifier = Modifier.fillMaxSize()
+        ) { innerPadding ->
+          Box(
+            modifier = Modifier
+              .fillMaxSize()
+              .padding(innerPadding)
+          ) {
+            FaceLivenessDetector(
+              sessionId = sessionId,
+              region = region,
+              onComplete = {
+                finishWithSuccess("success image")
+              },
+              onError = { error ->
+                Log.e(TAG, "Error during Face Liveness flow ${error.message}")
+                finishWithError(error.message ?: "Unknown error occurred")
+              }
+            )
           }
-        )
+        }
       }
     }
   }

@@ -18,6 +18,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+//apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
   namespace "com.awsliveness"
@@ -57,8 +58,7 @@ android {
   }
 
   composeOptions {
-    // REMOVED isCoreLibraryDesugaringEnabled from here
-    kotlinCompilerExtensionVersion = "1.5.14"
+    // kotlinCompilerExtensionVersion removed for Kotlin 2.x compatibility
   }
 }
 
@@ -89,10 +89,11 @@ dependencies {
   implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
   // FaceLivenessDetector dependency (CORRECT VERSION)
-  implementation "com.amplifyframework.ui:liveness:1.9.0"
-  implementation "com.amplifyframework:aws-auth-cognito:2.35.0"
-  implementation "com.amplifyframework:core:2.35.0"
+  implementation 'com.amplifyframework.ui:liveness:1.10.0'
 
+  // Amplify Auth dependency
+  implementation 'com.amplifyframework:aws-auth-cognito:2.37.0'
+  implementation 'com.amplifyframework:core:2.37.0'
 
   // Material Des
   implementation 'com.google.android.material:material:1.13.0'
