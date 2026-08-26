@@ -3,6 +3,7 @@ ext {
   androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
   androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
   androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
+  kotlinVersion = project.hasProperty('kotlinVersion') ? rootProject.ext.kotlinVersion : '2.0.0'
 }
 
 buildscript {
@@ -11,14 +12,15 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.0.0'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
+    classpath 'com.android.tools.build:gradle:8.4.0'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${project.hasProperty('kotlinVersion') ? rootProject.ext.kotlinVersion : '2.0.0'}"
+    classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:${project.hasProperty('kotlinVersion') ? rootProject.ext.kotlinVersion : '2.0.0'}"
   }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-//apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
   namespace "com.awsliveness"
@@ -57,9 +59,6 @@ android {
     compose true
   }
 
-  composeOptions {
-    // kotlinCompilerExtensionVersion removed for Kotlin 2.x compatibility
-  }
 }
 
 repositories {
@@ -68,18 +67,15 @@ repositories {
 }
 
 dependencies {
-  // Keep only ONE coreLibraryDesugaring declaration
   coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation project(':capacitor-android')
   implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
 
-  // Kotlin
   implementation 'androidx.core:core-ktx:1.12.0'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
 
-  // Jetpack Compose
   implementation platform('androidx.compose:compose-bom:2024.02.00')
   implementation 'androidx.compose.ui:ui'
   implementation 'androidx.compose.ui:ui-graphics'
@@ -88,14 +84,10 @@ dependencies {
   implementation 'androidx.activity:activity-compose:1.8.2'
   implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
-  // FaceLivenessDetector dependency (CORRECT VERSION)
   implementation 'com.amplifyframework.ui:liveness:1.10.0'
-
-  // Amplify Auth dependency
   implementation 'com.amplifyframework:aws-auth-cognito:2.37.0'
   implementation 'com.amplifyframework:core:2.37.0'
 
-  // Material Des
   implementation 'com.google.android.material:material:1.13.0'
 
   testImplementation "junit:junit:$junitVersion"
