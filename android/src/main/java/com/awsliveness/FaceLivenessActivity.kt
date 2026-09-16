@@ -27,6 +27,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import com.amplifyframework.ui.liveness.ui.FaceLivenessDetector
 import com.amplifyframework.ui.liveness.ui.LivenessColorScheme
 
@@ -38,6 +40,10 @@ class FaceLivenessActivity : ComponentActivity() {
     const val EXTRA_REGION = "region"
     const val RESULT_ERROR = "error"
     const val RESULT_REFERENCE_IMAGE = "referenceImage"
+
+    // Co-op Bank Kenya Brand Colors (Updated from Image)
+    private val CoopLightGreen = Color(0xFF89B854)
+    private val CoopDarkGreen = Color(0xFF1D4B39)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +60,15 @@ class FaceLivenessActivity : ComponentActivity() {
     Log.d(TAG, "Starting liveness check with sessionId: $sessionId, region: $region")
 
     setContent {
+      val coopColorScheme = LivenessColorScheme.default().copy(
+        primary = CoopDarkGreen,
+        onPrimary = Color.White,
+        secondary = CoopLightGreen,
+        onSecondary = Color.White
+      )
+
       MaterialTheme(
-        colorScheme = LivenessColorScheme.default()
+        colorScheme = coopColorScheme
       ) {
         PermissionRequiredScreen(
           onPermissionGranted = {
