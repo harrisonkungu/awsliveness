@@ -10,3 +10,101 @@ To run the provided example, you can use `npm start` command.
 ```bash
 npm start
 ```
+
+
+
+
+
+ext {
+  junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
+  androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
+  androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
+  androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+
+android {
+  namespace "com.awsliveness"
+  compileSdkVersion project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 34
+
+  defaultConfig {
+    minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 24
+    targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 34
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+  compileOptions {
+    coreLibraryDesugaringEnabled true
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  buildFeatures {
+    compose true
+  }
+
+  composeOptions {
+    // kotlinCompilerExtensionVersion removed for Kotlin 2.x compatibility
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  // Keep only ONE coreLibraryDesugaring declaration
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(':capacitor-android')
+  implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+
+  // Kotlin
+  implementation 'androidx.core:core-ktx:1.12.0'
+  // implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22" // Removed to use project version
+
+  // Jetpack Compose
+  implementation platform('androidx.compose:compose-bom:2024.02.00')
+  implementation 'androidx.compose.ui:ui'
+  implementation 'androidx.compose.ui:ui-graphics'
+  implementation 'androidx.compose.ui:ui-tooling-preview'
+  implementation 'androidx.compose.material3:material3:1.2.0'
+  implementation 'androidx.activity:activity-compose:1.8.2'
+  implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+
+  // FaceLivenessDetector dependency (CORRECT VERSION)
+  implementation 'com.amplifyframework.ui:liveness:1.10.0'
+
+  // Amplify Auth dependency
+  implementation 'com.amplifyframework:aws-auth-cognito:2.37.0'
+  implementation 'com.amplifyframework:core:2.37.0'
+
+  // Material Des
+  implementation 'com.google.android.material:material:1.13.0'
+
+  testImplementation "junit:junit:$junitVersion"
+  androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+}
